@@ -8,6 +8,7 @@ var partials = require('express-partials');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var static = require('./routes/static');//这种方式专门配置静态文件的路由没有必要吧，测试着玩玩
 
 var app = express();
 //locals包含了settings
@@ -25,9 +26,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public'))); 没有指定具体路径时是什么操作？
 app.use('/public',express.static(path.join(__dirname, 'public')));
+//这里配置静态访问的路径，就可不经过路由直接指定到html文件
+app.use('/static',express.static(path.join(__dirname,'views/static')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/static', static);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
