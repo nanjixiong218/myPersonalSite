@@ -23,7 +23,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public'))); 没有指定具体路径时是什么操作？
+app.use('/public',express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
