@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <title>HELLO BABY！</title>
+
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <link rel="stylesheet" type="text/css" href="/public/libs/myMother/css/carousel.css" media="screen"/>
+            <link rel="stylesheet" type="text/css" href="/public/libs/myMother/css/style.css" media="screen"/>
+            <script type="text/javascript" src="/public/libs/myMother/js/jquery-1.7.1.min.js"></script>
+            <script type="text/javascript" src="/public/libs/myMother/js/jquery.carousel.min.js"></script>
+            <script type="text/javascript" src="/public/libs/myMother/js/jquery.mousewheel.js"></script>
+            <style type="text/css">
+                body{
+                    background:url('/public/libs/myMother/image/stardust.jpg');
+                }
+            </style>
+        </head>
+        <body>
+            <div id="wide-wrapper">
+                <div id="header">
+                    <a href="/home" style="font-size: 30px;color:mediumvioletred">返回</a>
+                </div>
+
+                <ul id="carousel">
+                    <li><img src="/public/resource/myMother/image/mother1.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother2.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother3.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother4.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother5.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother6.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother7.jpg" width="120px" height="100px"/></li>
+                    <li><img src="/public/resource/myMother/image/mother8.jpg" width="120px" height="100px"/></li>
+                </ul>
+            </div>
+        </body>
+        <script type="text/javascript" >
+            $(document).ready(function(){
+                $("#carousel").carousel({
+                    width:870,
+                    height:350,
+                    horizontalRadius:270,
+                    verticalRadius:85,
+                    resize:false,
+                    mouseScroll:true,
+                    mouseDrag:true,
+                    scaleRatio:0.4,
+                    scrollbar:true,
+                    tooltip:true,
+                    mousewheel:true,
+                    mouseWheelReverse:true
+
+                });
+            });
+        </script>
+    </html>
+
