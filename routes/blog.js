@@ -6,7 +6,7 @@ var router = express.Router();
 var Topic = require('../controller/topic');
 
 router.get('/',function(req,res,next){
-    res.render('blog');
+    res.render('topic/edit');
 });
 router.get('/topic',function(req,res,next){
     res.send("topic");

@@ -13,4 +13,6 @@ exports.newAndSave = function (title, content, callback) {
     topic.content = content;
     topic.save(callback);
 };
+exports.getTopicById = function(){
 
+};
