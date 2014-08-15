@@ -8,6 +8,7 @@ var partials = require('express-partials');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var blog = require('./routes/blog');
 var static = require('./routes/static');//这种方式专门配置静态文件的路由没有必要吧，测试着玩玩
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/static',express.static(path.join(__dirname,'views/static')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/static', static);
+app.use('/blog',blog);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var ReplySchema = new Schema({
-    topic_id : {type : ObjectId , default : 0},
+    topic_id : {type : ObjectId },
     content :{type : String },
     create_at : {type : Date , default : Date.now},
     content_is_html : {type : Boolean}
