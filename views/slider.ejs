@@ -1,6 +1,4 @@
-/**
- * Created by Administrator on 2014/8/15.
- */
+
 <aside class="right-sidebar">
     <div class="widget">
         <form class="form-search">
@@ -11,8 +9,8 @@
         <h5 class="widgetheading">标签</h5>
         <ul class="cat">
             <% if(typeof(all_tags) !==undefined){%>
-            <% for(var i = 0 ,length = tags.length;i < length ;i++) {%>
-            <li><i class="icon-angle-right"></i><a href="/tag/<%= tags[i]._id%>"><%= tags[i].name %></a><span> (<%=tags[i].topic_count%>)</span></li>
+            <% for(var i = 0 ,length = all_tags.length;i < length ;i++) {%>
+            <li><i class="icon-angle-right"></i><a href="/tag/<%= all_tags[i]._id%>"><%= all_tags[i].name %></a><span> (<%=all_tags[i].topic_count%>)</span></li>
             <% }%>
             <% }%>
         </ul>

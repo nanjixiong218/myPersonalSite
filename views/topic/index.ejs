@@ -23,8 +23,8 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                                <% for (var i =0,length=topic_tags.length;i<length;i++){
-                                    var tag=tags[i];
+                                <% for (var i =0,length = topic_tags.length;i<length;i++){
+                                    var tag = topic_tags[i];
                                         if(tag.is_selected){ %>
                                 <span class='tag_selectable tag_select' tag_id='<%= tag._id %>'>
                                               <%= tag.name %>
@@ -46,7 +46,8 @@
                     </div>
             </div>
             <div class="col-lg-4">
-                <%- partial('./slider') %>
+                <!-- 这里不传all_tags为什么partial中接收不到index中的后台数据-->
+                <%- partial('./slider',{all_tags:all_tags}) %>
             </div>
         </div>
     </div>

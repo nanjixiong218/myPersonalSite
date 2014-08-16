@@ -11,22 +11,23 @@ var TopicTag = require('../proxy/topic_tag');
 
 exports.index = function(req,res,next){
     var topic_id = req.params.tid;
-
     var ep = EventProxy.create('topic','topic_tags','all_tags',function(topic,topic_tags,all_tags){
+        console.log(topic_tags.length);
         res.render("topic/index",{
             topic:topic,
-            topic_tag:topic_tags,
+            topic_tags:topic_tags,
             all_tags:all_tags
         });
     });
     ep.fail(next);
     Topic.getTopicById(topic_id,ep.done(function(topic){
-        topic.visit_count++;
-        topic.save();
-        ep.emit("topic");
+        topic.visit_count += 1;
+        topic.save();//你妹啊，这里提示没有save方法，是因为没有用findOne进行查找，得到的是数组
+        ep.emit("topic",topic);
+        Topic.getTagsByTopicId(topic._id,ep.done("topic_tags"));
+        Tag.getAllTags(ep.done("all_tags"));
     }));
-    Topic.getTagsByTopicId(topic._id,ep.done("topic_tags"));
-    Tag.getAllTags(ep.done("all_tags"));
+
 };
 
 exports.create = function(req,res,next){
@@ -43,20 +44,17 @@ exports.add = function (req,res,next){
 
     Topic.newAndSave(title,content,function(err,topic){
         var render = function(){
-            console.log("in");
             res.redirect('/blog/topic/'+topic._id);
         };
         var ep = EventProxy.create('tags_save',render);
         ep.fail(next);
         var tags_saved = function(){
-            console.log("savedone");
             ep.emit("tags_save");
         };
         ep.after('tag_save',tags.length,tags_saved);//这里替换成ep.done("tags_save");居然不行？
         tags.forEach(function(tag,i){
-
+            console.log(topic._id);
             TopicTag.newAndSave(topic._id,tag,function(){
-                console.log(i);
                 ep.emit("tag_save");
             });
             Tag.getTagById(tag,function(err,tag){
