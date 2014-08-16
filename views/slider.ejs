@@ -10,7 +10,7 @@
     <div class="widget">
         <h5 class="widgetheading">标签</h5>
         <ul class="cat">
-            <% if(typeof(tags) !==undefined){%>
+            <% if(typeof(all_tags) !==undefined){%>
             <% for(var i = 0 ,length = tags.length;i < length ;i++) {%>
             <li><i class="icon-angle-right"></i><a href="/tag/<%= tags[i]._id%>"><%= tags[i].name %></a><span> (<%=tags[i].topic_count%>)</span></li>
             <% }%>

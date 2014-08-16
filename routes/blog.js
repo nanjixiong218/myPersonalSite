@@ -5,13 +5,10 @@ var express = require('express');
 var router = express.Router();
 var Topic = require('../controller/topic');
 
-router.get('/',function(req,res,next){
-    res.render('topic/edit');
-});
-router.get('/topic',function(req,res,next){
-    res.send("topic");
-});
+router.get('/',Topic.create);
+router.get('/topic/:tid',Topic.index);
 
-router.post('/topic',Topic.createTopic);
+router.post('/topic',Topic.add);
+
 
 module.exports = router;
