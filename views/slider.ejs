@@ -10,7 +10,7 @@
         <ul class="cat">
             <% if(typeof(all_tags) !==undefined){%>
             <% for(var i = 0 ,length = all_tags.length;i < length ;i++) {%>
-            <li><i class="icon-angle-right"></i><a href="/tag/<%= all_tags[i]._id%>"><%= all_tags[i].name %></a><span> (<%=all_tags[i].topic_count%>)</span></li>
+            <li><i class="icon-angle-right"></i><a href="/tag/list_topic/<%= all_tags[i]._id%>"><%= all_tags[i].name %></a><span> (<%=all_tags[i].topic_count%>)</span></li>
             <% }%>
             <% }%>
         </ul>

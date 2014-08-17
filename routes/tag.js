@@ -10,5 +10,6 @@ router.get('/',function(req,res,next){
 });
 
 router.post('/add',Tag.createTag);
+router.get('/list_topic/:tagId',Tag.listTopic);
 
 module.exports = router;
