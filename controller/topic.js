@@ -30,6 +30,21 @@ exports.index = function(req,res,next){
 
 };
 
+exports.list = function (req,res,next){
+
+
+    Topic.getTopicsByQuery({},null,{limit:5,sort:'create_at'},function(err,topics){
+        Tag.getAllTags(function(err,all_tags){
+            res.render('topic/list',{
+                topics:topics,
+                all_tags:all_tags
+            });
+        });
+
+    });
+};
+
+
 exports.create = function(req,res,next){
     Tag.getAllTags(function(err,tags){
         res.render('topic/edit',{tags:tags});
