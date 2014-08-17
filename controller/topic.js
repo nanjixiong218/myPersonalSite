@@ -31,17 +31,26 @@ exports.index = function(req,res,next){
 };
 
 exports.list = function (req,res,next){
+    var page = parseInt(req.query.page,10)||1;
+    page = page>0?page:1;
+    var limit = 5;
 
-
-    Topic.getTopicsByQuery({},null,{limit:5,sort:'create_at'},function(err,topics){
-        Tag.getAllTags(function(err,all_tags){
-            res.render('topic/list',{
-                topics:topics,
-                all_tags:all_tags
-            });
+    var ep = EventProxy.create('topics','all_tags','pages',function(topics,all_tags,pages){
+        res.render('topic/list',{
+            topics:topics,
+            all_tags:all_tags,
+            pages:pages,
+            current_page:page,
+            base:'/blog'
         });
-
     });
+    Topic.getTopicsByQuery({},null,{skip:limit*(page-1),limit:5,sort:{create_at:-1}},ep.done("topics"));
+    Tag.getAllTags(ep.done("all_tags"));
+    Topic.getCountByQuery({},function(err,count){
+        var pages = Math.ceil(count / limit);
+        ep.emit("pages",pages);
+    });
+
 };
 
 

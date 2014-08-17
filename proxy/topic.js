@@ -31,3 +31,7 @@ exports.getTagsByTopicId =function(topic_id,callback){
 exports.getTopicsByQuery = function(query,field,opt,callback){
     Topic.find(query,field,opt,callback);
 };
+
+exports.getCountByQuery = function(query,callback){
+    Topic.count(query,callback);;
+};
