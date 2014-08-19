@@ -13,10 +13,14 @@
                         </div>
                     </div>
                     <div class="row" id="myEdit" style="display: none">
+
                         <div class="col-lg-12">
-                           <button id="edit">编辑</button>
-                           <button id="delete">删除</button>
-                           <button id="toTop">置顶</button>
+                            <form action="/blog/edit" id="editForm" method="post">
+                               <input type="hidden" name="topicId"/>
+                               <a href="/blog/edit/<%=topic._id%>">编辑</a>
+                               <button id="delete">删除</button>
+                               <button id="toTop">置顶</button>
+                            </form>
                         </div>
                     </div>
                     <div class="row">
@@ -56,5 +60,8 @@
                $("#myEdit").show();
            }
        });
+        $("#edit").click(function(){
+            window.location.href='/blog/edit/<%=topic._id%>';//window.location.href会忽略掉后面的topic._id很奇怪TODO
+        });
     });
 </script>

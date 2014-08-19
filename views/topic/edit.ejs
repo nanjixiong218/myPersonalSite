@@ -21,15 +21,15 @@
                     <div class="row">
                         <input name="tags" type="hidden" id="tags"/>
                         <div class="col-lg-12">
-                            title:<input class="form-control" name="title" type="text" placeholder="标题长度5个字以上"/>
+                            title:<input class="form-control" value="<%=topic.title%>" name="title" type="text" placeholder="标题长度5个字以上"/>
                         </div>
                     </div>
                     <br/>
                     <div class="row">
 
                         <div class="col-lg-12">
-                            <% for (var i =0,length=tags.length;i<length;i++){
-                                var tag=tags[i];
+                            <% for (var i =0,length=all_tags.length;i<length;i++){
+                                var tag = all_tags[i];
                                     if(tag.is_selected){ %>
                             <span class='tag_selectable tag_select' tag_id='<%= tag._id %>'>
 	                          <%= tag.name %>
@@ -45,7 +45,9 @@
                     <br/>
                     <div class="row">
                         <div class="col-lg-12">
-                            <span>content:</span><textarea name="content" class="ckeditor"></textarea>
+                            <span>content:</span><textarea name="content" class="ckeditor">
+                                <%=topic.content%>
+                            </textarea>
                             <input id="sub" type="submit" value="submit">
                         </div>
                     </div>

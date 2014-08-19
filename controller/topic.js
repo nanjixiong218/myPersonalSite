@@ -55,7 +55,46 @@ exports.list = function (req,res,next){
 };
 
 
-exports.create = function(req,res,next){
+exports.edit = function(req,res,next){
+    var topic_id = req.params.tid;
+    console.log(topic_id);
+    if(topic_id){
+
+        var ep = EventProxy.create('topic','all_tags',function(topic,all_tags){
+            res.render('topic/edit',{
+                topic:topic,
+                all_tags:all_tags
+            });
+        });
+        Topic.getTopicById(topic_id,function(err,topic){
+            ep.emit('topic',topic);
+        });
+        Tag.getAllTags(function(err,tags){
+            Topic.getTagsByTopicId(topic_id,function(err,topic_tags){
+                topic_tags.forEach(function(tagInTopic){
+                    tags.forEach(function(tag){
+                        if(tag._id === tagInTopic){
+                            tagInTopic.isSelected = true;
+                        }
+                    });
+                });
+            });
+            ep.emit('all_tags',tags);
+        });
+
+    }else{
+        Tag.getAllTags(function(err,tags){
+            res.render('topic/edit',{topic:{title:"",content:""},all_tags:tags});
+        });
+    }
+
+};
+exports.del = function(req,res,next){
+    Tag.getAllTags(function(err,tags){
+        res.render('topic/edit',{tags:tags});
+    });
+};
+exports.toTop = function(req,res,next){
     Tag.getAllTags(function(err,tags){
         res.render('topic/edit',{tags:tags});
     });
