@@ -1,8 +1,15 @@
 .tag_selectable {
-    border:1px solid #f2dede;
+    margin:5px 10px;
+    padding:5px 10px;
     background-color: floralwhite;
 }
 .tag_select{
-    border: 1px dashed #ccc;
-    background-color: rgba(0,0,200,0.5);
+    margin:5px 10px;
+    padding:5px 10px;
+    background-color: rgba(0,0,200,0.9);
+}
+.tag_info{
+    margin:5px 10px;
+    padding:5px 10px;
+    background-color: darkseagreen;
 }

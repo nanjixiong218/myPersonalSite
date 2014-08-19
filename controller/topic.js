@@ -3,6 +3,7 @@
  */
 
 var sanitize = require('validator').sanitize;
+var config = require('../config.js');
 var EventProxy = require('eventproxy');
 var Topic = require('../proxy/topic');
 var Tag = require('../proxy/tag');
@@ -33,8 +34,8 @@ exports.index = function(req,res,next){
 exports.list = function (req,res,next){
     var page = parseInt(req.query.page,10)||1;
     page = page>0?page:1;
-    var limit = 5;
-
+    var limit = config.config.limit;
+    console.log(limit);
     var ep = EventProxy.create('topics','all_tags','pages',function(topics,all_tags,pages){
         res.render('topic/list',{
             topics:topics,
@@ -44,7 +45,7 @@ exports.list = function (req,res,next){
             base:'/blog'
         });
     });
-    Topic.getTopicsByQuery({},null,{skip:limit*(page-1),limit:5,sort:{create_at:-1}},ep.done("topics"));
+    Topic.getTopicsByQuery({},null,{skip:limit*(page-1),limit:limit,sort:{create_at:-1}},ep.done("topics"));
     Tag.getAllTags(ep.done("all_tags"));
     Topic.getCountByQuery({},function(err,count){
         var pages = Math.ceil(count / limit);

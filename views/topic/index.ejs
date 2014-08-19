@@ -1,35 +1,35 @@
-<link href="/public/javascripts/libs/ckeditor/contents.css" type="text/css" rel="stylesheet"/>
-<script src="/public/javascripts/libs/ckeditor/ckeditor.js" type="text/javascript"></script>
-<%- partial('headline',{headerNav:"我的博客",headerContent:"前端宣言"})%>
+<link href="/public/css/tags.css" type="text/css" rel="stylesheet"/>
+<%- partial('headline',{headerNav:"我的博客",headerContent:"网站还在搭建测试阶段，还不支持评论，" +
+        "会先发布一些以前积累的博客。后面会写一些系列性文章，主要为了巩固旧知识，学习新知识和回顾自己做过的一些项目。" +
+        "现在构思的系列有《javascript和java设计模式对比实现系列》，《个人小项目讲解系列》，" +
+        "《正则表达式系列（基于js讲解）》《HTML5系列（着重canvas编程）》"})%>
 <section id="content">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                     <div class="row">
                         <div class="col-lg-12">
-                            <%= topic.title%>
+                            <h1><%= topic.title%></h1>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                                <% for (var i =0,length = topic_tags.length;i<length;i++){
+                            <span style="padding: 2px 10px">标签:</span>
+                                <%
+                                for (var i =0,length = topic_tags.length;i<length;i++){
                                     var tag = topic_tags[i];
-                                        if(tag.is_selected){ %>
-                                <span class='tag_selectable tag_select' tag_id='<%= tag._id %>'>
+                                %>
+                                <span class='tag_info' tag_id='<%= tag._id %>'>
                                               <%= tag.name %>
-                                            </span>
-                                <% }else{ %>
-                                <span class='tag_selectable' tag_id='<%= tag._id %>'>
-                                                <%= tag.name %>
-                                            </span>
+                                </span>
                                 <% } %>
-                                <% }%>
                             </div>
                         </div>
                     <div class="row">
+                        <hr>
                         <div class="col-lg-12">
-                           <div>
-                              <%- topic.content %>
+                           <div id="myTopic">
+                                  <%- topic.content %>
                            </div>
                         </div>
                     </div>
