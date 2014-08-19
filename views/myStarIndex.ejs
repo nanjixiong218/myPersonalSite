@@ -1,0 +1,148 @@
+<!DOCTYPR html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .myStarNav{
+            position:absolute;
+            width:30px;
+            height:30px;
+        }
+        .myStarNav:hover{
+            cursor:pointer;
+        }
+        canvas{
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        #nav1{
+            left:855px;
+            top:205px;
+        }
+        #nav2{
+            left:875px;
+            top:245px;
+        }
+        #nav3{
+            left:835px;
+            top:285px;
+        }
+        #nav4{
+            left:895px;
+            top:285px;
+        }
+        #nav5{
+            left:895px;
+            top:445px;
+        }
+        #nav6{
+            left:935px;
+            top:405px;
+        }
+        #nav7{
+            left:1022px;
+            top:185px;
+        }
+
+        #nav9{
+            left:975px;
+            top:265px;
+        }
+        #nav10{
+            left:1115px;
+            top:265px;
+        }
+        #nav11{
+            left:935px;
+            top:345px;
+        }
+        #nav12{
+            left:1155px;
+            top:345px;
+        }
+        #nav13{
+            left:1045px;
+            top:265px;
+        }
+        #nav14{
+            left:1045px;
+            top:505px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" >
+</canvas>
+<div id="nav1" title="我的妈妈" class="myStarNav"></div>
+<div id="nav2" title="我的爸爸" class="myStarNav"></div>
+<div id="nav3" title="我的女朋友" class="myStarNav"></div>
+<div id="nav4" title="……" class="myStarNav"></div>
+<div id="nav5" title="父亲节的礼物" class="myStarNav"></div>
+<div id="nav6" title="母亲节的礼物" class="myStarNav"></div>
+<div id="nav7" title="首页" class="myStarNav"></div>
+<div id="nav9" title="我的博客" class="myStarNav"></div>
+<div id="nav10" title="关于" class="myStarNav"></div>
+<div id="nav11" title="……" class="myStarNav"></div>
+<div id="nav12" title="……" class="myStarNav"></div>
+<div id="nav13" title="……" class="myStarNav"></div>
+<div id="nav14" title="……" class="myStarNav"></div>
+</body>
+<script src="/public/javascripts/universe.js" type="text/javascript"></script>
+<script  type="text/javascript">
+    var canvas = document.getElementById("myCanvas");
+    canvas.width = window.innerWidth;
+    canvas.height =window.innerHeight;
+    var context = canvas.getContext('2d');
+    var image = new Image();
+    image.src = '/public/img/universe1.jpg';
+    image.onload = function(){
+        var universe = new Universe(canvas,context,1,2,100,200,image);
+        universe.animate();
+    };
+    document.getElementById("nav1").onclick = function(){
+        window.open('/static/myMother.html');
+    }
+    document.getElementById("nav2").onclick = function(){
+        window.open('/static/myFather.html');
+    }
+    document.getElementById("nav3").onclick = function(){
+        window.open('/static/mengying.html');
+    }
+    document.getElementById("nav4").onclick = function(){
+        //window.open('/');
+    }
+    document.getElementById("nav5").onclick = function(){
+        window.open('/static/fatherDay.html');
+    }
+    document.getElementById("nav6").onclick = function(){
+        window.open('/static/motherDay.html');
+    }
+    document.getElementById("nav7").onclick = function(){
+        window.open('/index');
+    }
+    document.getElementById("nav9").onclick = function(){
+        window.open('/blog');
+    }
+    document.getElementById("nav10").onclick = function(){
+        window.open('/about');
+    }
+    document.getElementById("nav11").onclick = function(){
+        //window.open('/');
+    }
+    document.getElementById("nav12").onclick = function(){
+        //window.open('/');
+    }
+    document.getElementById("nav13").onclick = function(){
+       // window.open('/');
+    }
+    document.getElementById("nav14").onclick = function(){
+        //window.open('/');
+    }
+</script>
+</html>
+
