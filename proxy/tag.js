@@ -15,11 +15,20 @@ exports.getTagById = function(tag_id,callback){
     Tag.findOne({_id:tag_id},callback);
 };
 exports.newAndSave = function(name,order,description,callback){
-    var tag = new Tag();
-    tag.name = name;
-    tag.order = order;
-    tag.description = description;
-    tag.save(callback);
+    Tag.findOne({name:name},function(err,tag){
+        console.log(tag);
+        if(tag !==undefined){
+            callback(new Error('此tag名字已经存在！'));
+        }else{
+            var tag = new Tag();
+            tag.name = name;
+            tag.order = order;
+            tag.description = description;
+            tag.save(callback);
+        }
+
+    });
+
 };
 exports.getTopicsByTagId = function(tag_id,callback){
     TopicTag.find({tag_id:tag_id},function(err,topic_tags){

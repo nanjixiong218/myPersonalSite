@@ -14,7 +14,12 @@ exports.createTag = function(req,res,next){
     var order = parseInt(req.body.order);
     var description = req.body.description.trim();
     Tag.newAndSave(name,order,description,function(err,tag){
-        res.render('tag/edit');
+        if(err){
+            next(err);
+        }else{
+            res.render('tag/edit');
+        }
+
     });
 };
 exports.listTopic = function(req,res,next){
