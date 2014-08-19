@@ -1,12 +1,12 @@
 .tag_selectable {
     margin:5px 10px;
     padding:5px 10px;
-    background-color: floralwhite;
+    background-color: #f5f5f5;
 }
 .tag_select{
     margin:5px 10px;
     padding:5px 10px;
-    background-color: rgba(0,0,200,0.9);
+    background-color: aquamarine;
 }
 .tag_info{
     margin:5px 10px;

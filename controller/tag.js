@@ -19,7 +19,6 @@ exports.createTag = function(req,res,next){
         }else{
             res.render('tag/edit');
         }
-
     });
 };
 exports.listTopic = function(req,res,next){

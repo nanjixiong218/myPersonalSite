@@ -65,7 +65,8 @@ exports.create = function(req,res,next){
 exports.add = function (req,res,next){
     var title = req.body.title.trim();
     var content = req.body.content.trim();
-    var tags = req.body.tags.split(',');//tags是数组
+
+    var tags = req.body.tags;//tags前台传的时候是数组，到这里应变成字符串
 
     Topic.newAndSave(title,content,function(err,topic){
         var render = function(){
@@ -76,6 +77,11 @@ exports.add = function (req,res,next){
         var tags_saved = function(){
             ep.emit("tags_save");
         };
+        if(tags ==='') {
+            tags = [];
+        }else{
+            tags = tags.split(',');
+        }
         ep.after('tag_save',tags.length,tags_saved);//这里替换成ep.done("tags_save");居然不行？
         tags.forEach(function(tag,i){
             console.log(topic._id);

@@ -12,6 +12,13 @@
                             <h1><%= topic.title%></h1>
                         </div>
                     </div>
+                    <div class="row" id="myEdit" style="display: none">
+                        <div class="col-lg-12">
+                           <button id="edit">编辑</button>
+                           <button id="delete">删除</button>
+                           <button id="toTop">置顶</button>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <span style="padding: 2px 10px">标签:</span>
@@ -41,3 +48,13 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(function(){
+       $(document.body).on("keydown",function(e){
+           if(e.which == 88&& e.ctrlKey&& e.shiftKey){
+               console.log('in');
+               $("#myEdit").show();
+           }
+       });
+    });
+</script>

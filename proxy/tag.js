@@ -17,7 +17,7 @@ exports.getTagById = function(tag_id,callback){
 exports.newAndSave = function(name,order,description,callback){
     Tag.findOne({name:name},function(err,tag){
         console.log(tag);
-        if(tag !==undefined){
+        if(tag){
             callback(new Error('此tag名字已经存在！'));
         }else{
             var tag = new Tag();
@@ -38,4 +38,4 @@ exports.getTopicsByTagId = function(tag_id,callback){
         }
         Topic.find({_id:{'$in':topic_ids}},callback);
     });
-}
+};
