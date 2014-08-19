@@ -12,7 +12,8 @@ router.get('/topic/:tid',Topic.index);
 router.get('/del/:tid',Topic.del);
 router.get('/toTop/:tid',Topic.toTop);
 
-router.post('/topic',Topic.add);
+router.post('/add',Topic.add);
+router.post('/update',Topic.update);
 
 
 module.exports = router;

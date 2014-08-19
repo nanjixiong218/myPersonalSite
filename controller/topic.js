@@ -63,7 +63,8 @@ exports.edit = function(req,res,next){
         var ep = EventProxy.create('topic','all_tags',function(topic,all_tags){
             res.render('topic/edit',{
                 topic:topic,
-                all_tags:all_tags
+                all_tags:all_tags,
+                isUpdate:true
             });
         });
         Topic.getTopicById(topic_id,function(err,topic){
@@ -84,7 +85,7 @@ exports.edit = function(req,res,next){
 
     }else{
         Tag.getAllTags(function(err,tags){
-            res.render('topic/edit',{topic:{title:"",content:""},all_tags:tags});
+            res.render('topic/edit',{topic:{title:"",content:""},all_tags:tags,isUpdate:false});
         });
     }
 
@@ -123,7 +124,7 @@ exports.add = function (req,res,next){
         }
         ep.after('tag_save',tags.length,tags_saved);//这里替换成ep.done("tags_save");居然不行？
         tags.forEach(function(tag,i){
-            console.log(topic._id);
+            console.log(i);
             TopicTag.newAndSave(topic._id,tag,function(){
                 ep.emit("tag_save");
             });
@@ -133,5 +134,30 @@ exports.add = function (req,res,next){
             });
         });
     });
+
+};
+exports.update = function (req,res,next){
+    var topic_id = req.body.topic_id;
+    var title = req.body.title.trim();
+    var content = req.body.content.trim();
+
+    var tags = req.body.tags;//tags前台传的时候是数组，到这里应变成字符串
+
+    console.log(topic_id);
+    console.log(title);
+    Tag.getAllTags(function(err,all_tags){//TODO 没有对tags进行编辑
+        Topic.getTopicById(topic_id,function(err,topic){
+            topic.title = title;
+            topic.content = content;
+            topic.save();
+            res.render('topic/index',{
+                topic:topic,
+                topic_tags:tags,
+                all_tags:all_tags
+            });
+        });
+
+    });
+
 
 };
