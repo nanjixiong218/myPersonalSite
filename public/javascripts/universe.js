@@ -137,7 +137,7 @@ Universe.prototype = {
     },
 	animate:function(){
         this.initXuPoints(800,140);
-		var alp = 0.2 ;
+		var alp = 0.1 ;
 		var r = 1;
 		var that = this;
         var dir;
@@ -145,7 +145,7 @@ Universe.prototype = {
 
 			if(r>=15||alp>=1){
 				dir = 0;		
-			}else if(r<=1||alp<=0.2){
+			}else if(r<=1||alp<=0.1){
 				dir = 1;
 			}
 			r = dir==1? r + 15/100: r - 15/100 ;
@@ -173,6 +173,7 @@ Universe.prototype = {
             that.drawStar(p[12].x,p[12].y,r,alp,Math.PI*4/17);
             that.drawStar(p[13].x,p[13].y,r,alp,Math.PI*4/10);
             this.context.save();
+            this.context.lineWidth = 2;
             this.context.strokeStyle = 'rgba(255,255,255,'+alp+')';
             this.context.beginPath();
             this.context.moveTo(p[0].x,p[0].y);
