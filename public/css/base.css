@@ -6,3 +6,18 @@
 #myTopic p{
     text-indent: 36px;
 }
+.right-sidebar .widget{
+    clear:left;
+}
+.right-sidebar .widget > ul > li{
+    border-bottom: 1px solid #808080;
+}
+.right-sidebar a:hover{
+    text-decoration: none;
+}
+/*标签部分的li*/
+.right-sidebar .widget .cat li{
+    padding: 0 10px 0 0;
+    float: left;
+    border-bottom: 0;
+}
