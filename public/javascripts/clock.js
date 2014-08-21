@@ -2,20 +2,38 @@ var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
 
 var FONT_HEIGHT = 15;
+//圆和canvas的间距
 var MARGIN = 35;
+//圆的半径
 var RADIUS = canvas.width/2 - MARGIN;
+//周围数字与圆的间距
 var NUMBER_SPACING = 20;
+//数字的位置
 var NUMBER_RADIUS = RADIUS+NUMBER_SPACING;
-
+//时分秒针与圆半径的长度差
 var SECOND_TRUNCATION = canvas.width/25;
 var MINITE_TRUNCATION =canvas.width/15;
-var HOUR_TRUNCATION =canvas.width/10;
+var HOUR_TRUNCATION =canvas.width/8;
+//时分秒针的半径
 var SECOND_HAND = RADIUS - SECOND_TRUNCATION;
 var MINITE_HAND = RADIUS - MINITE_TRUNCATION;
 var HOUR_HAND = RADIUS - HOUR_TRUNCATION;
-
+//s时分秒针半径数组
 var HANDSRADIUS = [SECOND_HAND,MINITE_HAND,HOUR_HAND];
-var DBPI = Math.PI*2; 
+//眼睛的位置，半径
+var EYEX1 = canvas.width/2 - RADIUS/2;
+var EYEX2 = canvas.width/2 + RADIUS/2;
+var EYEY = canvas.height/2 - RADIUS/2;
+var EYER = RADIUS/10;
+
+var DBPI = Math.PI*2;
+//用于控制眼睛动
+var flag = 0;
+var dir = 1;
+
+var MOUSEX = canvas.width/2;
+var MOUSEY = canvas.height/2 - RADIUS/2;
+var MOUSER = RADIUS+RADIUS/5;
 
 function drawClock(){
 
@@ -28,6 +46,9 @@ function drawClock(){
 
 	drawCircle();
 	drawCenter();
+    drawEyes();
+    drawEyesInner();
+    drawMouse();
 	drawHands();
 
 	//context.restore();
@@ -37,10 +58,23 @@ function drawClock(){
 
 //画圆形
 function drawCircle(){
-	
+	context.save();
 	context.beginPath();
+    context.shadowOffsetX = 10;
+    context.shadowOffsetY = 10;
+    context.shadowBlur = 50;
+    context.shadowColor = 'black' ;
+    //没有border-shadow是个缺陷
+    var gradient = context.createRadialGradient(canvas.width/2,canvas.height/2,RADIUS,canvas.width/2,canvas.height/2,0);
+    gradient.addColorStop(0,'#e064b7');
+    gradient.addColorStop(0.25,'#00d8cc');
+    gradient.addColorStop(0.5,'#ff76bc');
+    gradient.addColorStop(0.75,'#78ba00');
+    gradient.addColorStop(1,'#ff2e12');
+    context.fillStyle = gradient;
 	context.arc(canvas.width/2,canvas.height/2,RADIUS,0,DBPI,true);
-	context.stroke();
+	context.fill();
+    context.restore();
 }
 //画圆心
 function drawCenter(){
@@ -100,11 +134,74 @@ function drawNumber(){
 			
 	});
 }
+//画眼睛
+function drawEyes(){
+    context.save();
+    context.lineWidth = 2;
+    context.fillStyle = '#f4b300';
 
+    context.beginPath();
+    context.arc(EYEX1,EYEY,EYER,0,DBPI,true);
+    context.fill();
+
+    context.beginPath();
+    context.arc(EYEX2,EYEY,EYER,0,DBPI,true);
+    context.fill();
+    context.restore();
+
+
+}
+//画眼珠
+function drawEyesInner(){
+    var innerRadius = 20;
+    var innerMarginX;
+    var innerMarginY;
+    if(flag == 0 ){
+        innerMarginX = 0;
+        innerMarginY = EYER -innerRadius;
+        if(dir == 1){
+            flag = 1;
+        }else if(dir == -1){
+            flag = -1;
+        }
+    }else if(flag == 1){
+        innerMarginX = (EYER - 10)*Math.cos(DBPI/6);
+        innerMarginY = (EYER -10)*Math.sin(DBPI/6);
+        flag = 0;
+        dir = -1;
+    }else if(flag==-1){
+        innerMarginX = -(EYER - 10)*Math.cos(DBPI/6);
+        innerMarginY = (EYER -10)*Math.sin(DBPI/6);
+        flag = 0;
+        dir = 1;
+    }
+    context.save();
+    context.fillStyle = '#4e0000';
+    context.beginPath();
+    context.arc(EYEX1+innerMarginX,EYEY+innerMarginY,innerRadius,0,DBPI,true);
+    context.fill();
+    context.closePath();
+    context.beginPath();
+    context.arc(EYEX2-innerMarginX,EYEY+innerMarginY,innerRadius,0,DBPI,true);
+    context.fill();
+    context.closePath();
+    context.restore();
+}
+//画嘴
+function drawMouse(){
+    context.save();
+    context.lineWidth = 3;
+    context.strokeStyle = 'red';
+    context.beginPath();
+    context.arc(MOUSEX,MOUSEY,MOUSER,DBPI*4/12,DBPI*2/12,true);
+    context.stroke();
+    context.restore();
+}
+
+//把离屏canvas更新给img
 function updateClockImage(){
 	document.getElementById("snapshotImage").src=canvas.toDataURL();
 }
-
 
 context.font = FONT_HEIGHT+'px Arial';
 loop  = setInterval(drawClock,1000);
