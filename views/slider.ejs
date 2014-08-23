@@ -16,6 +16,16 @@
         </ul>
     </div>
     <div class="widget">
+        <h5 class="widgetheading">热门文章</h5>
+        <ul class="recent">
+            <% if(typeof(hot_topics) !==undefined){%>
+            <% for(var i = 0 ,length = hot_topics.length;i < length ;i++) {%>
+            <li><i class="icon-angle-right"></i><a href="/blog/topic/<%= hot_topics[i]._id%>"><%= hot_topics[i].title %></a><span> (<%=hot_topics[i].visit_count%>)</span></li>
+            <% }%>
+            <% }%>
+        </ul>
+    </div>
+    <div class="widget">
         <h5 class="widgetheading">推荐连接</h5>
         <ul class="recent">
             <li>

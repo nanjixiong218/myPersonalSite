@@ -36,9 +36,10 @@ exports.list = function (req,res,next){
     page = page>0?page:1;
     var limit = config.config.limit;
     console.log(limit);
-    var ep = EventProxy.create('topics','all_tags','pages',function(topics,all_tags,pages){
+    var ep = EventProxy.create('topics','hot_topics','all_tags','pages',function(topics,hot_topics,all_tags,pages){
         res.render('topic/list',{
             topics:topics,
+            hot_topics:hot_topics,
             all_tags:all_tags,
             pages:pages,
             current_page:page,
@@ -51,6 +52,7 @@ exports.list = function (req,res,next){
         var pages = Math.ceil(count / limit);
         ep.emit("pages",pages);
     });
+    Topic.getTopicsByQuery({},null,{limit:5,sort:{visit_count:-1}},ep.done("hot_topics"));
 
 };
 
