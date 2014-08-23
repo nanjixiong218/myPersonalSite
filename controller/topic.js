@@ -12,10 +12,11 @@ var TopicTag = require('../proxy/topic_tag');
 
 exports.index = function(req,res,next){
     var topic_id = req.params.tid;
-    var ep = EventProxy.create('topic','topic_tags','all_tags',function(topic,topic_tags,all_tags){
+    var ep = EventProxy.create('topic','hot_topics','topic_tags','all_tags',function(topic,hot_topics,topic_tags,all_tags){
         console.log(topic_tags.length);
         res.render("topic/index",{
             topic:topic,
+            hot_topics:hot_topics,
             topic_tags:topic_tags,
             all_tags:all_tags
         });
@@ -28,6 +29,7 @@ exports.index = function(req,res,next){
         Topic.getTagsByTopicId(topic._id,ep.done("topic_tags"));
         Tag.getAllTags(ep.done("all_tags"));
     }));
+    Topic.getTopicsByQuery({},null,{limit:5,sort:{visit_count:-1}},ep.done("hot_topics"));
 
 };
 
