@@ -26,12 +26,13 @@ exports.listTopic = function(req,res,next){
     var page = parseInt(req.query.page,10)||1;
     var limit = config.config.limit;
     console.log(page);
-    var ep = EventProxy.create('topic_ids','all_tags','pages',function(topic_ids,all_tags,pages){
+    var ep = EventProxy.create('topic_ids','hot_topics','all_tags','pages',function(topic_ids,hot_topics,all_tags,pages){
         var opt = {skip:limit*(page-1),limit:limit,sort:{create_at:-1}};
         Topic.getTopicsByQuery({_id:{'$in':topic_ids}},null,opt,function(err,topics){
             console.log(topics.length);
             res.render('topic/list',{
                 topics:topics,
+                hot_topics:hot_topics,
                 all_tags:all_tags,
                 pages:pages,
                 current_page:page,
@@ -52,4 +53,5 @@ exports.listTopic = function(req,res,next){
         ep.emit("pages",pages);
     });
     Tag.getAllTags(ep.done("all_tags"));
+    Topic.getTopicsByQuery({},null,{limit:5,sort:{visit_count:-1}},ep.done("hot_topics"));
 };

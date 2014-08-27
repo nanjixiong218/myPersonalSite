@@ -64,9 +64,10 @@ exports.edit = function(req,res,next){
     console.log(topic_id);
     if(topic_id){
 
-        var ep = EventProxy.create('topic','all_tags',function(topic,all_tags){
+        var ep = EventProxy.create('topic','hot_topics','all_tags',function(topic,hot_topics,all_tags){
             res.render('topic/edit',{
                 topic:topic,
+                hot_topics:hot_topics,
                 all_tags:all_tags,
                 isUpdate:true
             });
@@ -86,12 +87,14 @@ exports.edit = function(req,res,next){
             });
             ep.emit('all_tags',tags);
         });
+        Topic.getTopicsByQuery({},null,{limit:5,sort:{visit_count:-1}},ep.done("hot_topics"));
 
     }else{
         Tag.getAllTags(function(err,tags){
             res.render('topic/edit',{topic:{title:"",content:""},all_tags:tags,isUpdate:false});
         });
     }
+
 
 };
 exports.del = function(req,res,next){
@@ -149,19 +152,24 @@ exports.update = function (req,res,next){
 
     console.log(topic_id);
     console.log(title);
-    Tag.getAllTags(function(err,all_tags){//TODO 没有对tags进行编辑
-        Topic.getTopicById(topic_id,function(err,topic){
-            topic.title = title;
-            topic.content = content;
-            topic.save();
-            res.render('topic/index',{
-                topic:topic,
-                topic_tags:tags,
-                all_tags:all_tags
+    Topic.getTopicsByQuery({},null,{limit:5,sort:{visit_count:-1}},function (err,hot_topics){
+        console.log(hot_topics);
+        Tag.getAllTags(function(err,all_tags){//TODO 没有对tags进行编辑
+            Topic.getTopicById(topic_id,function(err,topic){
+                topic.title = title;
+                topic.content = content;
+                topic.save();
+                res.render('topic/index',{
+                    topic:topic,
+                    hot_topics:hot_topics,
+                    topic_tags:tags,
+                    all_tags:all_tags
+                });
             });
-        });
 
+        });
     });
+
 
 
 };
