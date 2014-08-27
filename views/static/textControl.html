@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <title>textControl</title>
+		<script src="/public/javascripts/textControl.js"></script>
+	</head>
+	<body>
+        <textarea id = "inputText" type="text" placeholder="输入字符"></textarea>
+		<canvas id="myCanvas" width="1000px" height="600px">
+
+		</canvas>
+
+	</body>
+    <script type="text/javascript">
+        window.onload = function () {
+            var input = document.getElementById("inputText");
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            var text;
+            var baseFont;
+            var textHeight;
+            var dragging = false;
+            var which = undefined;
+            var mouseDown ;
+
+            var funcs = {
+                move : function (loc) {
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    text.x = loc.x;
+                    text.y = loc.y;
+                    text.drawAll();
+                },
+                rotate : function (loc) {
+                    console.log('rotate');
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    var xLen = loc.x - text.x;
+                    var yLen = loc.y - text.y;
+                    text.angle = Math.atan(yLen/xLen);
+                    text.drawAll();
+                },
+                scale : function (loc) {
+                    console.log('scale');
+                    scale = (loc.x - mouseDown.x)/100;
+
+                    text.fontSize = (1+scale)*baseFont;
+                    text.textHeight = (1+scale)*textHeight;
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    text.drawAll();
+                },
+                delete : function () {
+                    console.log('del');
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                }
+            };
+            input.onkeyup = function () {
+                text = new textControl(canvas,this.value,canvas.width/2,canvas.height/2,32,0);
+                context.clearRect(0,0,canvas.width,canvas.height);
+                text.drawAll();
+            };
+            canvas.onmousedown = function (e) {
+                if(text) {
+                    var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+                    mouseDown = loc;
+                    baseFont = text.fontSize;
+                    textHeight = text.textHeight;
+                    /*尼玛，isPointInPath太牛逼了，不需要经过坐标转换,坑死我了！
+                    loc = {
+                        x:loc.x - canvas.width/2,
+                        y:loc.y - canvas.height/2
+                    };
+                    */
+                    text.funcImages.forEach(function (funcImg,index) {
+                        context.save();
+                        context.translate(text.x,text.y);
+                        context.rotate(text.angle);
+                        if (funcImg.isInPath(loc.x, loc.y)) {
+                            dragging  = true;
+                            var funcs = ['move','rotate','scale','delete'];
+                            which = funcs[index];
+                        }
+                        context.restore();
+                    });
+
+                }
+            };
+
+            canvas.onmousemove = function (e) {
+                if(dragging&&which) {
+                    var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+
+                    funcs[which](loc);
+                }
+            };
+            canvas.onmouseup = function () {
+                dragging = false;
+            }
+        }
+    </script>
+</html>
