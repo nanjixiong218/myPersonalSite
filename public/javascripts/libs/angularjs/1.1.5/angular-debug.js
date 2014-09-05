@@ -16872,5 +16872,13 @@ var styleDirective = valueFn({
     angularInit(document, bootstrap);
   });
 
-;if(typeof define === "function"){define("angularjs/1.1.5/angular-debug",[],function(){return angular;})};})(window, document);
+;
+    //seajs和requirejs的模块化
+    if(typeof define === "function"){
+        define("angularjs/1.1.5/angular-debug",[],function(){
+            return angular;
+        })
+    };
+
+})(window, document);
 angular.element(document).find('head').append('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\\:form{display:block;}</style>');
