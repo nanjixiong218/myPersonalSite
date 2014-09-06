@@ -3,6 +3,15 @@
  */
 define(function(require,exports,module){
     exports.init = function(){
-        alert(1);
+        function initFs(fs){
+            console.log(fs);
+            fs.root.getDirectory('../../../../webFile',{create:true},function(dir){
+                console.log(dir.isDirectory);
+            },errorHandle);
+        }
+        function errorHandle(err){
+            console.log(err);
+        }
+        window.webkitRequestFileSystem(window.TEMPORARY,1024*1024,initFs,errorHandle);
     }
 });

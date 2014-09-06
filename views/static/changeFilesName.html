@@ -81,24 +81,24 @@
 
   // Set configuration
   seajs.config({
-    base: "/public/javascripts/libs/",
+    base: "/public/javascripts/",
     alias: {
-      "$": "jquery/jquery-1.11.0.js",
-      "store-debug": "store/1.3.7/store-debug",
-      "angularjs-debug": "angularjs/1.1.5/angular-debug.js"
+      "$": "libs/jquery/jquery-1.11.0.js",
+      "store-debug": "libs/store/1.3.7/store-debug",
+      "angularjs-debug": "libs/angularjs/1.1.5/angular-debug.js"
     }
   });
 
   // For development
   if (location.href.indexOf("?dev") > 0) {
     seajs.use("../static/ng-todo/src/main", function(main) {
-      main.init()
+      main.init();
     });
   }
   // For production
   else {
-    seajs.use("ng-todo/main-debug", function(main) {
-      main.init()
+    seajs.use("changeFilesName/main", function(main) {
+      main.init();
     });
   }
 </script>
