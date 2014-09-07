@@ -2,6 +2,7 @@
  * Created by xu on 2014/9/5.
  */
 define(function(require,exports,module){
+    require("$");
     exports.init = function(){
         function initFs(fs){
             console.log(fs);
