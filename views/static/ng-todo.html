@@ -5,14 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Todo</title>
     <link rel="stylesheet" href="/public/css/ng-tod/base.css">
-    </head>
-
-
-
+</head>
 <section id="todoapp" ng-controller="MainCtrl">
     <header id="header">
         <h1 ng-bind="title"></h1>
-        <input id="new-todo" ng-model="newTodo" ng-keypress="createOnEnter($event)" placeholder="What needs to be done?" autofocus>
+        <input id="new-todo" ng-model="newTodo" ng-keypress="createOnEnter($event)" placeholder="What needs to be done?"
+               autofocus>
     </header>
     <section id="main">
         <input id="toggle-all" type="checkbox" ng-click="toggleAll($event)">
@@ -29,7 +27,9 @@
         </ul>
     </section>
     <footer id="footer">
-        <span id="todo-count"><strong ng-bind="remaining"></strong> <span ng-bind-template="{{remaining < 1 ? 'item' : 'items'}} left"></span></span>
+        <span id="todo-count"><strong ng-bind="remaining"></strong>
+            <span ng-bind-template="{{remaining < 1 ? 'item' : 'items'}} left"></span>
+        </span>
         <ul id="filters">
             <li>
                 <a ng-class="{selected: selected('')}" href="#/" ng-click="filter('')">All</a>
