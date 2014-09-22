@@ -1,0 +1,13 @@
+.heart{
+    color:red;
+    -webkit-animation:heartBig 5s ease 0 infinite alternate;
+    animation:heartBig 5s ease 0 infinite alternate;
+}
+@keyframes heartBig{
+    0% {font-size:1px}
+    100% {font-size:400px}
+}
+@-webkit-keyframes heartBig{
+    0% {font-size:1px}
+    100% {font-size:400px}
+}

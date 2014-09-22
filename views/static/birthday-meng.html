@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+    <title>孟影生日</title>
+    <link rel="stylesheet" type="text/css" href="/public/javascripts/libs/bootstrap-3.1.1-dist/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/public/libs/birthday-meng/css/common.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/public/libs/birthday-meng/css/animate.css" media="screen">
+</head>
+<body>
+<div class="container">
+<!--首屏大图-->
+<div class="jumbotron" id="headerPic">
+    <h1>老婆生日快乐</h1>
+    <p>一生有你</p>
+    <p><span class="glyphicon glyphicon-heart heart"></span></p>
+</div>
+
+
+<!--青涩岁月-->
+<div class="content" id="yong">
+    <p>那些年你还如此青涩……</p>
+    <img src=""/>
+</div>
+
+
+<!--大学生活-->
+<div class="xy-content xy-zhineng xy-white-font" id="">
+
+</div>
+<!--美丽动人-->
+<div class="xy-content xy-huibao xy-white-font" id="sixHavest">
+
+</div>
+<!--相爱时刻-->
+<div class="xy-content xy-yaoqiu xy-white-font" id="fiveReq">
+
+</div>
+<!--报名流程-->
+<div class="xy-content xy-ap" id="applyStep">
+
+</div>
+
+<!-- 地图 -->
+<div class="xy-content xy-map">
+
+</div>
+
+<div class="xy-content xy-bottom">
+
+</div>
+</div>
+
+<footer>
+    <div class="xy-content footer cf">
+
+    </div>
+</footer>
+<script type="text/javascript" src="/public/javascripts/libs/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/public/javascripts/libs/jqueryPluge/jquery.easing.min.js"></script>
+<script src="/public/javascripts/libs/jqueryPluge/jquery-parallax-intense.js"></script>
+<script>
+$(function(){
+    var s = 0,lock = true;
+    var win = $(window),
+            header = $('#hdClone'),
+            step_1 = $('#applyStep_1'),
+            step_2 = $('#applyStep_2'),
+            step_3 = $('#applyStep_3');
+    win.scroll(function(event) {
+        var scroll_top = win.scrollTop();
+        //导航
+        if(scroll_top > $('#xyProject').offset().top - header.height()){/*$('#we').outerHeight() / 3 * 2*/
+            header.stop().animate({
+                top: 0,
+                opacity: 1
+            });
+        }else{
+            header.stop().animate({
+                top: '-58px',
+                opacity: 0
+            })
+        }
+        //校园项目
+        if(scroll_top > $('#xyProject').offset().top - (win.height() - $('#xyProject').height()/2)){
+            $('.xy-jieshao .xy-ptitle').animate({
+                top: 0,
+                opacity: 1
+            });
+            $('.xy-jieshao .xy-project').delay(200).animate({
+                top: 0,
+                opacity: 1
+            });
+        }//如果这里加一个else，延迟明显增大了
+
+
+        //四项职能
+        if(scroll_top > $('#fourDo').offset().top - (win.height() - $('#fourDo').height()/2)){
+            $('.xy-zhineng .xy-ptitle').animate({
+                opacity: 1,
+                paddingLeft: 0
+            });
+            var d = 0;
+            for(var i = 1;i<=4;i++){
+                d += 100;
+                $('#DO_'+ i +' ul').delay(d).animate({//用的delay延迟做的，而不是用deferred或者queue什么的实现动画的一个接一个
+                    opacity: 1,
+                    left: 0
+                });
+            }
+        }
+        //五个要求
+        if(scroll_top > $('#fiveReq').offset().top - (win.height() - $('#fiveReq').height()/2)){
+            var t;
+            $('#fiveReq .xy-ptitle').animate({
+                top: 0,
+                opacity: 1
+            })
+            for (var i = 1; i <= 5; i++) {
+                switch (i) {
+                    case 1:
+                        t = 0;
+                        break;
+                    case 2:
+                        t = 250;
+                        break;
+                    default:
+                        t = t + 200;
+                }
+
+                $('.require-' + i + ' div')
+                        .delay(t)
+                        .animate({//animate函数本身就是deferred的，animate能接受回调函数么？todo
+                            width: '100%'
+                        },5000).animate({
+                            height: '100%'
+                        },5000);
+            }
+        }
+        //6大回报
+        if(scroll_top > $('#sixHavest').offset().top - (win.height() - $('#fiveReq').height()/2)){
+            var d = 0;
+            $('#sixHavest .xy-ptitle').animate({
+                opacity: 1,
+                marginLeft: 0
+            })
+            for(var i = 0; i <= 6; i++){
+                d+=100;
+                $('#sixHavest .xy-hb-detail').eq(i).delay(d).animate({
+                    left: 0,
+                    opacity: 1
+                })
+            }
+        }
+        //报名流程
+        var showStepHeight = $('#applyStep').offset().top - win.height()/2;
+        var lineHeight = 0;
+        if (scroll_top < showStepHeight) {  //还原竖线进程为0
+            $('.ap-line-act').stop().animate({
+                'height': '0px'
+            }, 100);
+        }
+        if(scroll_top >= showStepHeight){   //设置竖线进程的高度
+            lineHeight = scroll_top - showStepHeight;
+            if (lineHeight < 0) {
+                lineHeight = 0;
+            }
+            if (lineHeight > 1046) {
+                lineHeight = 1046;
+            }
+            $('.ap-line-act').stop().animate({
+                'height': lineHeight + 'px'
+            }, 100);
+        }
+        if (scroll_top < (showStepHeight + 112)) {  //还原步骤一第一个标题
+            $('.step-one .left').stop().animate({
+                'opacity': 0.2,
+                'left': '0px'
+            }, 100);
+        }
+        if (scroll_top > (showStepHeight + 112)) {  //展示步骤一第一个标题
+            $('.step-one .left').stop().animate({
+                'opacity': 1,
+                'left': '50px'
+            }, 100);
+        }
+        if (scroll_top < (showStepHeight + 278)) {  //还原步骤A
+            $('.step-one .right .right-a').stop().animate({
+                'opacity': 0.2
+            }, 100);
+        }
+        if (scroll_top > (showStepHeight + 278)) {  //展示步骤A
+            $('.step-one .right .right-a').stop().animate({
+                'opacity': 1
+            }, 100);
+        }
+        if (scroll_top < (showStepHeight + 329)) {  //还原步骤B
+            $('.step-one .right .right-b').stop().animate({
+                'opacity': 0.2
+            }, 100);
+        }
+        if (scroll_top > (showStepHeight + 329)) {  //展示步骤B
+            $('.step-one .right .right-b').stop().animate({
+                'opacity': 1
+            }, 100);
+        }
+        if (scroll_top < (showStepHeight + 525)) {  //还原步骤二
+            $('.step-two .left').stop().animate({
+                'opacity': 0.2,
+                'left': '0px'
+            }, 100);
+            $('.step-two .right-layer').stop().animate({
+                'width': '20px'
+            }, 400);
+        }
+        if (scroll_top > (showStepHeight + 525)) {  //展示步骤二
+            $('.step-two .left').stop().animate({
+                'opacity': 1,
+                'left': '50px'
+            }, 100);
+            $('.step-two .right-layer').stop().animate({
+                'width': '530px'
+            }, 400);
+        }
+        if (scroll_top < (showStepHeight + 852)) {  //还原步骤三
+            $('.step-three .left').stop().animate({
+                'opacity': 0.2,
+                'left': '0px'
+            }, 100);
+            $('.step-three .right').stop().animate({
+                'opacity': 0.2
+            }, 100);
+        }
+        if (scroll_top > (showStepHeight + 852)) {  //展示步骤三
+            $('.step-three .left').stop().animate({
+                'opacity': 1,
+                'left': '50px'
+            }, 100);
+            $('.step-three .right').stop().animate({
+                'opacity': 1
+            }, 100);
+        }
+
+        //飞机显示跟隐藏
+        if(scroll_top > $('.xy-map').offset().top - $('.xy-map').height() / 2){
+            $('#plan')
+                    .delay(200)
+                    .animate({
+                        left: '29.58%',
+                        top: '38.7%',
+                        opacity: 1
+                    },2000)
+        }else{
+            $('#plan').css({
+                opacity: 0,
+                left: '20.5%',
+                top: '10px'
+            })
+        }
+    });
+    $('#map').parallax();
+});
+</script>
+<script type="text/javascript">
+    (function() {
+        var a = document.createElement("script");
+        a.type = "text/javascript";
+        a.async = true;
+        a.src = "http://analytics.oneplus.cn/opdc.js?v=20140807";
+        var b = document.getElementsByTagName("script")[0x0];
+        b.parentNode.insertBefore(a, b)
+    })();
+</script>
+
+
+</body></html>
