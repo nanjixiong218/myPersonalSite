@@ -1,8 +1,13 @@
 h1,p{
     text-align: center;
+
 }
+
 #headerPic{
     height:700px;
     background: url(../img/birth.jpg) no-repeat center fixed;
     background-size: cover;
+}
+#headerPic h1{
+    color:#006ac1;
 }
